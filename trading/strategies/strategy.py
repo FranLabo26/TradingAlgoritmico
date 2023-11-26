@@ -40,6 +40,6 @@ class TestStrategy(bt.Strategy):
                     self.log('BUY CREATE, %.2f' % self.dataclose[0])
                     self.order = self.buy()
         else:
-            if len(self) >= (self.bar_executed + 5):
-                self.log('SELL CREATED {}'.format(self.dataclose[0]))
-                self.order = self.sell()
+            #if len(self) >= (self.bar_executed + 5):
+            self.log('SELL CREATED {}'.format(self.dataclose[0]))
+            self.order = self.sell()

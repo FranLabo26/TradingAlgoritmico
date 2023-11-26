@@ -1,26 +1,23 @@
-
-import datetime  # For datetime objects
+import os, sys, argparse
+import pandas as pd
 import backtrader as bt
-from strategy import TestStrategy
-
+from strategies.GoldenCross import GoldenCross
 
 cerebro = bt.Cerebro()
+cerebro.broker.setcash(100000)
+print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
 
-cerebro.broker.set_cash(1000000)
+spy_prices = pd.read_csv ('oracle.csv', index_col = 'Date', parse_dates = True)
 
-data = bt.feeds.YahooFinanceCSVData(
-    dataname = 'oracle.csv',
-    #do not pass values before this date
-    fromdate = datetime.datetime(2020,1,1),
-    #do not pass values after this date
-    todate= datetime.datetime(2023,12,31),
-    reverse = False
-)
+feed = bt.feeds.PandasData(dataname =spy_prices)
+cerebro.adddata(feed)
 
-cerebro.adddata(data)
-cerebro.addstrategy(TestStrategy)
-print('Starting portfolio value: %.2f' % cerebro.broker.getvalue())
+cerebro.addstrategy(GoldenCross)
 
 cerebro.run()
 
-print('Final portfolio value: %.2f' % cerebro.broker.getvalue())
+print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
+
+
+cerebro.plot()
+
