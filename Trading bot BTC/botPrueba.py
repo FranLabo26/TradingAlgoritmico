@@ -26,6 +26,14 @@ dataMONTH = bt.feeds.YahooFinanceCSVData(
     reverse = False
 )
 
+dataCAKE = bt.feeds.YahooFinanceCSVData(
+    dataname = 'CAKE-USD.csv',
+    #do not pass values before this date
+    fromdate = datetime.datetime(2020,9,30),
+    #do not pass values after this date
+    todate= datetime.datetime(2022,9,30),
+    reverse = False
+)
 
 
 def run():
@@ -34,12 +42,12 @@ def run():
     saldoInicial = cerebro.broker.getvalue()
     print('Saldo Inicial: %.2f' % saldoInicial)
 
-    cerebro.adddata(dataDAY)
-    cerebro.addstrategy(StochRSIStrategy)
-    #cerebro.addstrategy(GoldenCross)
+    cerebro.adddata(dataCAKE)
+    #cerebro.addstrategy(StochRSIStrategy)
+    cerebro.addstrategy(GoldenCross)
 
 
-
+    cerebro.broker.setcommission(commission=0.001)
     cerebro.run()
     cerebro.plot()
 
