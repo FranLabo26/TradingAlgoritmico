@@ -35,6 +35,14 @@ dataCAKE = bt.feeds.YahooFinanceCSVData(
     reverse = False
 )
 
+dataORCL = bt.feeds.YahooFinanceCSVData(
+    dataname = 'ORCL.csv',
+    #do not pass values before this date
+    fromdate = datetime.datetime(1995,1,1),
+    #do not pass values after this date
+    todate= datetime.datetime(2014,1,1),
+    reverse = False
+)
 
 def run():
     cerebro = bt.Cerebro()
@@ -42,9 +50,9 @@ def run():
     saldoInicial = cerebro.broker.getvalue()
     print('Saldo Inicial: %.2f' % saldoInicial)
 
-    cerebro.adddata(dataCAKE)
-    #cerebro.addstrategy(StochRSIStrategy)
-    cerebro.addstrategy(GoldenCross)
+    cerebro.adddata(dataORCL)
+    cerebro.addstrategy(StochRSIStrategy)
+    #cerebro.addstrategy(GoldenCross)
 
 
     cerebro.broker.setcommission(commission=0.001)

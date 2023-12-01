@@ -2,7 +2,7 @@ import math
 import backtrader as bt
 
 class GoldenCross(bt.Strategy):
-    params = (('fast', 10),('slow',20),('order_porcentage', 0.95),('ticker', 'BTC'))
+    params = (('fast', 50),('slow',200),('order_porcentage', 0.95),('ticker', 'BTC'))
     def __init__(self):
         self.fast_moving_average = bt.indicators.SMA(
             self.data.close, period= self.params.fast,plotname='Media Movil 50 Periodos'
